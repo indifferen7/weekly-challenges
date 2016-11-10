@@ -38,6 +38,3 @@ java -jar target/maze-0.1.0-SNAPSHOT-standalone.jar mazes/maze-normal-005.txt
 ```
 
 Super useful stuff - have fun!
-
-## License
-MIT. Go crazy! :)
