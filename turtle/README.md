@@ -6,7 +6,7 @@ This code is my take on [the fifteenth challenge](http://weblog.jamisbuck.org/20
 Check out this screenshot to see a sample image drawn using SVG. 
 ![Something](https://dl.dropboxusercontent.com/u/404130/turtle/example.png)
 
-There is also an interactive demo over here. Read on to get some more info on how to use the turtle (and the demo).
+There is also [an interactive demo over here](http://casualsemantics.se/turtle). Read on to get some more info on how to use the turtle (and the demo).
 
 ## Overview of the code
 The code is divided into two main parts:
