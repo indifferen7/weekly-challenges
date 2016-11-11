@@ -12,6 +12,7 @@ There is also [an interactive demo over here](http://casualsemantics.se/turtle).
 The code is divided into two main parts:
 
 a) The turtle (located in the file turtle.cljs)
+
 b) The demo code (located in core.cljs)
 
 While the demo is fancy and all it serves only as a showcase for the turtle code, so let's dig a bit more into how to use the turtle.
