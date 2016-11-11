@@ -4,9 +4,9 @@
 	    [cljs.reader :as reader]))
 
 ;;;; Turtle graphics example using turtle.cljs
-(enable-console-print!)
 
-(defn centre-of-screen []
+(defn centre-of-screen
+  []
   [(/ (.-innerWidth js/window) 2)
    (/ (.-innerHeight js/window) 2)])
 
@@ -77,10 +77,11 @@
    [:h3 "Turtle graphics"]
    [:div.description
     "In this demo, actions are added as a vector of maps in the 
-    below textbox. For more info, checkout the github repo. Some
-    sample commands are already present, click 'Draw' to see what
-    happens."]
-   [:textarea {:id "actions" :value (str sample-actions) }]
+    below textbox. For more info, checkout "
+    [:a { :href "https://github.com/indifferen7/weekly-challenges/tree/master/turtle"}
+     " the github repo"]
+    ". Some sample commands are already present, click 'Draw' to see what happens."]
+   [:textarea {:id "actions" :defaultValue (str sample-actions)}]
    [:input {:type "button" :value "Draw" :onClick #(update-state! (reader/read-string (.-value (. js/document (getElementById "actions")))))}]
    [:input {:type "button" :value "Reset" :onClick #(reset-state!) }]])
 

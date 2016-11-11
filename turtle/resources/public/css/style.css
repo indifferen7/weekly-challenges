@@ -3,3 +3,4 @@ svg { position:fixed; top:0; left:0; height:100%; width:100% }
 input { display: block; margin-bottom: 1em; }
 #controls { position: absolute; top: 0em; left: 1em; }
 div.description { width: 20em; }
+textarea.actions { width: 20m; }
