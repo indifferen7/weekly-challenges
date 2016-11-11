@@ -1,62 +1,93 @@
 (ns turtle.core
   (:require [reagent.core :as reagent :refer [atom]]
-            [turtle.turtle :as turtle]))
+            [turtle.turtle :as turtle]
+	    [cljs.reader :as reader]))
 
+;;;; Turtle graphics example using turtle.cljs
 (enable-console-print!)
 
-(def centre-of-screen
+(defn centre-of-screen []
   [(/ (.-innerWidth js/window) 2)
    (/ (.-innerHeight js/window) 2)])
 
-(defonce app-state (atom {:result [] :turtle (turtle/new-turtle centre-of-screen) }))
+(defn new-app-state
+  "Create a fresh app state"
+  []
+  {:result [] :turtle (turtle/new-turtle (centre-of-screen)) })
 
-(defn draw-square
+(defonce app-state (atom (new-app-state)))
+
+(defn reset-state!
+  "Reset the app state"
+  []
+  (reset! app-state (new-app-state)))
+
+(defn update-state!
+  "Update the app state through processing the provided actions"
+  [actions]
+  (swap! app-state into (turtle/process (:turtle @app-state) actions)))
+
+;; sample shapes
+
+(defn new-square
   [size]
   (into []
         (flatten
          (repeat 4 [{:type :move :distance size}
                     {:type :turn :degrees 90}]))))
 
-(defn draw-square-flower
+(defn new-square-flower
   [size]
   (into []
         (flatten
-         (repeat 18 (conj (draw-square size) { :type :turn :degrees 20 })))))
+         (repeat 18 (conj (new-square size) { :type :turn :degrees 20 })))))
 
-(def sample-commands
+(def sample-actions
   (-> []
       (conj {:type :style :style "solid"})
       (conj {:type :color :color "green"})
-      (conj {:type :width :width 3 })
-      (into (draw-square-flower 200))
+      (conj {:type :width :width 3 }) 
+      (into (new-square-flower 200))
       (conj {:type :turn :degrees 10})
       (conj {:type :style :style "dotted"})
       (conj {:type :color :color "purple"})
       (conj {:type :width :width 2 })
-      (into (draw-square-flower 100))))
+      (into (new-square-flower 100))))
 
-(reset! app-state (turtle/process (:turtle @app-state) sample-commands))
-
-(defn surface-element
-  "Returns the drawing surface element, i.e.
-  the SVG element."
+(defn surface-component
+  "The SVG component."
   []
-  (. js/document (getElementById "surface")))
+  [:svg {:id "surface" }
+   (for [{:keys [from to color width style]} (:result @app-state)]
+     [:line {:x1 (first from)
+             :y1 (second from)
+             :x2 (first to)
+             :y2 (second to)
+             :stroke-width width
+             :stroke color
+             :stroke-dasharray (case style
+                                 "dotted" "0.1% 0.1%"
+                                 "dashed" "1% 0.1%"
+                                 "0% 0%")}])])
 
-(defn surface-component []
-   [:svg {:id "surface" }
-    (for [{:keys [from to color width style]} (:result @app-state)]
-      [:line {:x1 (first from)
-              :y1 (second from)
-              :x2 (first to)
-              :y2 (second to)
-              :stroke-width width
-              :stroke color
-              :stroke-dasharray style
-              }])
-   ]
-  )
+(defn controls-component
+  "Component for controlling the ui."
+  []
+  [:div
+   [:h3 "Turtle graphics"]
+   [:div.description
+    "In this demo, actions are added as a vector of maps in the 
+    below textbox. For more info, checkout the github repo. Some
+    sample commands are already present, click 'Draw' to see what
+    happens."]
+   [:textarea {:id "actions" :value (str sample-actions) }]
+   [:input {:type "button" :value "Draw" :onClick #(update-state! (reader/read-string (.-value (. js/document (getElementById "actions")))))}]
+   [:input {:type "button" :value "Reset" :onClick #(reset-state!) }]])
 
 (reagent/render-component
   [surface-component]
   (. js/document (getElementById "app")))
+
+(reagent/render-component
+  [controls-component]
+  (. js/document (getElementById "controls")))

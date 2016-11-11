@@ -1,4 +1,4 @@
-(defproject week15 "0.1.0-SNAPSHOT"
+(defproject turtle "0.1.0-SNAPSHOT"
   :description "FIXME: write this!"
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
@@ -26,16 +26,16 @@
                 ;; the presence of a :figwheel configuration here
                 ;; will cause figwheel to inject the figwheel client
                 ;; into your build
-                :figwheel {:on-jsload "week15.core/on-js-reload"
+                :figwheel {:on-jsload "turtle.core/on-js-reload"
                            ;; :open-urls will pop open your application
                            ;; in the default browser once Figwheel has
                            ;; started and complied your application.
                            ;; Comment this out once it no longer serves you.
                            :open-urls ["http://localhost:3449/index.html"]}
 
-                :compiler {:main week15.core
+                :compiler {:main turtle.core
                            :asset-path "js/compiled/out"
-                           :output-to "resources/public/js/compiled/week15.js"
+                           :output-to "resources/public/js/compiled/turtle.js"
                            :output-dir "resources/public/js/compiled/out"
                            :source-map-timestamp true
                            ;; To console.log CLJS data-structures make sure you enable devtools in Chrome
@@ -46,8 +46,8 @@
                ;; lein cljsbuild once min
                {:id "min"
                 :source-paths ["src"]
-                :compiler {:output-to "resources/public/js/compiled/week15.js"
-                           :main week15.core
+                :compiler {:output-to "resources/public/js/compiled/turtle.js"
+                           :main turtle.core
                            :optimizations :advanced
                            :pretty-print false}}]}
 
