@@ -3,7 +3,10 @@
 This code is my take on [the fifteenth challenge](http://weblog.jamisbuck.org/2016/11/5/weekly-programming-challenge-15.html) by Jamis Buck. This time around the task at hand was to create code for drawing [turtle graphics](https://en.wikipedia.org/wiki/Turtle_graphics). Once again I decided to give ClojureScript a go. All in all a super fun challenge!
 
 ## What can it do?
-Check out this screenshot to see a sample image drawn using SVG. There is also an interactive demo over here. Read on to get some more info on how to use the turtle (and the demo).
+Check out this screenshot to see a sample image drawn using SVG. 
+![Something](https://dl.dropboxusercontent.com/u/404130/turtle/example.png)
+
+There is also an interactive demo over here. Read on to get some more info on how to use the turtle (and the demo).
 
 ## Overview of the code
 The code is divided into two main parts:
